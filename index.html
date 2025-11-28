@@ -6,118 +6,366 @@
   <title>Impresos Gráficos Hernández</title>
   <style>
     body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background-color: #111;
-      color: #fff;
+     <!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Página de Cotización - Demo</title>
+  <style>
+    :root{
+      --bg:#0f1724;
+      --card:#0b1220;
+      --accent:#06b6d4;
+      --muted:#9aa6b2;
+      --glass: rgba(255,255,255,0.03);
     }
-    header {
-      background-color: #000;
-      padding: 20px 40px;
-      text-align: center;
-      border-bottom: 3px solid #444;
+    *{box-sizing:border-box;font-family:Inter,system-ui,Arial,Helvetica,sans-serif}
+    body{
+      margin:0;
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:
+        radial-gradient(800px 400px at 10% 10%, rgba(6,182,212,0.08), transparent 10%),
+        linear-gradient(180deg,#071029 0%, #041021 100%);
+      color:#e6eef3;
+      padding:32px;
     }
-    header h1 {
-      margin: 0;
-      font-size: 2rem;
-      letter-spacing: 2px;
+
+    .card{
+      width:100%;
+      max-width:1000px;
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius:14px;
+      padding:22px;
+      box-shadow: 0 10px 30px rgba(2,6,23,0.6);
+      display:grid;
+      grid-template-columns: 380px 1fr;
+      gap:18px;
+      align-items:start;
     }
-    nav {
-      display: flex;
-      justify-content: center;
-      gap: 30px;
-      padding: 15px;
-      background-color: #141414;
-      border-bottom: 1px solid #333;
+
+    h1{ margin:0 0 8px 0; font-size:20px;}
+    p.lead{margin:0 0 18px 0; color:var(--muted); font-size:13px}
+
+    form{ display:flex; flex-direction:column; gap:12px;}
+    label{ font-size:13px; color:var(--muted); }
+    input, textarea, select{
+      background:var(--glass);
+      border:1px solid rgba(255,255,255,0.04);
+      height:42px;
+      padding:8px 12px;
+      border-radius:8px;
+      color:inherit;
+      outline:none;
+      transition:transform .12s ease, box-shadow .12s ease;
     }
-    nav a {
-      color: #fff;
-      text-decoration: none;
-      font-weight: bold;
-      transition: 0.3s;
+    textarea{ min-height:88px; resize:vertical; padding-top:10px;}
+    input:focus, textarea:focus, select:focus{ transform:translateY(-2px); box-shadow:0 6px 20px rgba(6,182,212,0.08); }
+
+    .row{ display:flex; gap:10px;}
+    .row > *{ flex:1; }
+
+    /* Botón con animación */
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      border:0;
+      cursor:pointer;
+      padding:12px 16px;
+      border-radius:10px;
+      font-weight:600;
+      background:linear-gradient(90deg,var(--accent), #3b82f6);
+      color:#04202a;
+      box-shadow: 0 6px 18px rgba(6,182,212,0.12);
+      transition:transform .12s ease, box-shadow .12s ease;
     }
-    nav a:hover {
-      color: #d4a017;
+    .btn:active{ transform:translateY(1px) scale(.997); box-shadow:0 4px 12px rgba(6,182,212,0.08); }
+    .btn .dot{
+      width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,0.65);
+      animation: pulse 1.8s infinite;
     }
-    section {
-      padding: 50px;
-      max-width: 900px;
-      margin: auto;
+    @keyframes pulse{
+      0%{ transform:scale(1); opacity:1; }
+      50%{ transform:scale(1.6); opacity:.6; }
+      100%{ transform:scale(1); opacity:1; }
     }
-    h2 {
-      color: #d4a017;
-      margin-bottom: 10px;
+
+    /* Panel derecho: gráfico animado y vista previa */
+    .right{
+      padding:18px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.015));
+      border-radius:10px;
+      min-height:300px;
+      display:flex;
+      flex-direction:column;
+      gap:12px;
     }
-    footer {
-      background-color: #000;
-      padding: 30px;
-      text-align: center;
-      color: #ccc;
-      border-top: 3px solid #444;
-      margin-top: 40px;
+
+    .chart-wrap{ flex:1; display:flex; align-items:center; justify-content:center; position:relative; }
+    /* barras animadas (SVG) */
+    .bars { width:100%; max-width:520px; height:220px; }
+
+    .preview{
+      background: rgba(255,255,255,0.02);
+      border-radius:8px;
+      padding:10px;
+      font-size:13px;
+      color:var(--muted);
     }
-    .btn-cotizar {
-      background-color: #d4a017;
-      color: #000;
-      padding: 10px 20px;
-      border-radius: 5px;
-      text-decoration: none;
-      font-weight: bold;
-      display: inline-block;
-      margin-top: 20px;
-      transition: 0.3s;
+
+    /* small responsive */
+    @media (max-width:900px){
+      .card{ grid-template-columns:1fr; padding:14px; }
     }
-    .btn-cotizar:hover {
-      background-color: #fff;
-    }
+
   </style>
 </head>
 <body>
-  <header>
-    <h1>Impresos Gráficos Hernández</h1>
-  </header>
+  <div class="card" role="main">
+    <div>
+      <h1>Solicitar cotización</h1>
+      <p class="lead">Rellena los datos y pulsa <strong>Cotizar</strong>. Se abrirá tu cliente de correo con el mensaje listo para enviar. Verás una animación gráfica que refleja el valor ingresado.</p>
 
-  <nav>
-    <a href="#inicio">Inicio</a>
-    <a href="#servicios">Servicios</a>
-    <a href="#nosotros">Nosotros</a>
-    <a href="#galeria">Galería</a>
-    <a href="#contacto">Contacto</a>
-  </nav>
+      <form id="quoteForm" onsubmit="event.preventDefault(); sendQuote();">
+        <label for="name">Nombre</label>
+        <input id="name" name="name" placeholder="Tu nombre" required>
 
-  <section id="inicio">
-    <h2>Bienvenido</h2>
-    <p>Somos especialistas en impresos de papelería comercial, cajas, empaques y elaboración de sellos de hule con acabados profesionales y personalizados.</p>
-  </section>
+        <label for="email">Tu correo</label>
+        <input id="email" name="email" type="email" placeholder="tunombre@ejemplo.com" required>
 
-  <section id="servicios">
-    <h2>Servicios</h2>
-    <ul>
-      <li>Impresión de papelería comercial</li>
-      <li>Diseño y fabricación de cajas y empaques</li>
-      <li>Sellos de hule personalizados</li>
-    </ul>
-  </section>
+        <div class="row">
+          <div>
+            <label for="service">Servicio</label>
+            <select id="service" name="service">
+              <option value="Desarrollo web">Desarrollo web</option>
+              <option value="Diseño gráfico">Diseño gráfico</option>
+              <option value="Marketing">Marketing digital</option>
+              <option value="Otro">Otro</option>
+            </select>
+          </div>
 
-  <section id="nosotros">
-    <h2>¿Quiénes somos?</h2>
-    <p>Impresos Gráficos Hernández nace con la misión de brindar soluciones de impresión de alta calidad a empresas y emprendedores, ofreciendo productos personalizados y duraderos con tecnología moderna.</p>
-  </section>
+          <div>
+            <label for="amount">Valor estimado (Q)</label>
+            <input id="amount" name="amount" type="number" placeholder="0" min="0" value="1500" required>
+          </div>
+        </div>
 
-  <section id="galeria">
-    <h2>Galería</h2>
-    <p>Próximamente mostraremos algunos de nuestros trabajos.</p>
-  </section>
+        <label for="message">Detalles / Mensaje</label>
+        <textarea id="message" name="message" placeholder="Incluye requerimientos, plazos, etc."></textarea>
 
-  <section id="contacto">
-    <h2>Contacto</h2>
-    <p>¿Necesitas una cotización o más información?</p>
-    <p><strong>Correo:</strong> impresosgraficoshernandez@gmail.com</p>
-    <a class="btn-cotizar" href="mailto:impresosgraficoshernandez@gmail.com">Solicitar cotización</a>
-  </section>
+        <div style="display:flex;gap:8px;align-items:center;margin-top:6px;">
+          <button type="button" class="btn" id="previewBtn" onclick="animatePreview();">
+            <span class="dot" aria-hidden></span>
+            Vista previa
+          </button>
 
-  <footer>
-    <p>© 2025 Impresos Gráficos Hernández — Todos los derechos reservados.</p>
-  </footer>
+          <button type="submit" class="btn" id="sendBtn" title="Abrir cliente de correo">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" style="transform:translateY(-1px)" viewBox="0 0 24 24" fill="none" stroke="#04202a" stroke-width="2"><path d="M4 4h16v16H4z"/><path d="M22 4 12 13 2 4"/></svg>
+            Cotizar
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <div class="right" aria-live="polite">
+      <div class="chart-wrap" id="chartWrap">
+        <!-- SVG gráfico de barras (animado con JS) -->
+        <svg class="bars" viewBox="0 0 520 220" preserveAspectRatio="xMidYMid meet" id="barsSvg" aria-hidden="true">
+          <defs>
+            <linearGradient id="g1" x1="0" x2="1">
+              <stop offset="0" stop-color="#06b6d4" stop-opacity="0.9"/>
+              <stop offset="1" stop-color="#3b82f6" stop-opacity="0.9"/>
+            </linearGradient>
+          </defs>
+
+          <!-- Ejes/labels -->
+          <g id="grid" transform="translate(40,10)" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="1">
+            <line x1="0" x2="460" y1="0" y2="0"></line>
+            <line x1="0" x2="460" y1="55" y2="55"></line>
+            <line x1="0" x2="460" y1="110" y2="110"></line>
+            <line x1="0" x2="460" y1="165" y2="165"></line>
+          </g>
+
+          <!-- Bars group -->
+          <g id="barsGroup" transform="translate(40,10)">
+            <!-- 4 barras representativas -->
+            <rect x="0"   y="165" width="80" height="0" rx="8" ry="8" fill="url(#g1)" id="bar1"></rect>
+            <rect x="110" y="165" width="80" height="0" rx="8" ry="8" fill="url(#g1)" id="bar2"></rect>
+            <rect x="220" y="165" width="80" height="0" rx="8" ry="8" fill="url(#g1)" id="bar3"></rect>
+            <rect x="330" y="165" width="80" height="0" rx="8" ry="8" fill="url(#g1)" id="bar4"></rect>
+
+            <!-- labels -->
+            <text x="40"  y="205" font-size="11" text-anchor="middle" fill="#9aa6b2" id="lbl1">Diseño</text>
+            <text x="150" y="205" font-size="11" text-anchor="middle" fill="#9aa6b2" id="lbl2">Desarrollo</text>
+            <text x="260" y="205" font-size="11" text-anchor="middle" fill="#9aa6b2" id="lbl3">Marketing</text>
+            <text x="370" y="205" font-size="11" text-anchor="middle" fill="#9aa6b2" id="lbl4">Soporte</text>
+          </g>
+        </svg>
+      </div>
+
+      <div class="preview" id="mailPreview" aria-hidden="false">
+        <strong>Previsualización del correo:</strong>
+        <div id="previewText" style="margin-top:8px; white-space:pre-wrap; color: #d7eaf0;">
+          Sin contenido — completa el formulario para ver la previsualización.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Destinatario por defecto: cambia a tu correo real
+    const DEFAULT_TO = "ventas@ejemplo.com";
+
+    const form = document.getElementById('quoteForm');
+    const amountInput = document.getElementById('amount');
+    const nameInput = document.getElementById('name');
+    const emailInput = document.getElementById('email');
+    const serviceInput = document.getElementById('service');
+    const messageInput = document.getElementById('message');
+    const previewText = document.getElementById('previewText');
+
+    // barras
+    const barIds = ['bar1','bar2','bar3','bar4'].map(id => document.getElementById(id));
+
+    // Actualiza preview y gráfico
+    function updatePreviewAndChart(){
+      const name = nameInput.value || '[Nombre]';
+      const email = emailInput.value || '[correo]';
+      const service = serviceInput.value;
+      const amount = Number(amountInput.value) || 0;
+      const message = messageInput.value || '';
+
+      // Previsualización de correo (texto plano)
+      const body =
+`Hola,
+Solicito una cotización para el servicio "${service}".
+
+Nombre: ${name}
+Correo: ${email}
+Valor estimado: Q ${amount.toLocaleString('es-GT')}
+
+Detalles:
+${message}
+
+--- Fin del mensaje ---
+`;
+      previewText.textContent = body;
+
+      // Animación gráfica sencilla: distribuimos el valor entre 4 barras
+      // Normalizamos amount para la altura (máx 160px)
+      const max = 20000; // valor esperable -> ajusta según negocio
+      const normalized = Math.min(amount, max) / max; // 0..1
+
+      // Distribución proporcional con pequeños offsets para visual
+      const baseHeights = [
+        Math.round(normalized * 160 * 0.9),
+        Math.round(normalized * 160 * 1.0),
+        Math.round(normalized * 160 * 0.7),
+        Math.round(normalized * 160 * 0.5)
+      ];
+
+      // Animación suave con requestAnimationFrame
+      barIds.forEach((rect, i) => {
+        animateBarHeight(rect, baseHeights[i]);
+      });
+    }
+
+    // Animar altura de una barra SVG (cambia y y height)
+    function animateBarHeight(rect, targetHeight){
+      const startY = parseFloat(rect.getAttribute('y')) || 165;
+      const startH = parseFloat(rect.getAttribute('height')) || 0;
+      const targetH = targetHeight;
+      const targetY = 165 - targetH;
+      const duration = 550; // ms
+      const start = performance.now();
+
+      function step(now){
+        const t = Math.min(1, (now - start) / duration);
+        // easeOutQuad
+        const eased = 1 - (1 - t) * (1 - t);
+        const curH = startH + (targetH - startH) * eased;
+        const curY = startY + (targetY - startY) * eased;
+        rect.setAttribute('height', curH.toFixed(2));
+        rect.setAttribute('y', curY.toFixed(2));
+        if(t < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    }
+
+    // Enviar cotización: abre mailto con subject + body dinámicos
+    function sendQuote(){
+      const name = nameInput.value || '';
+      const email = emailInput.value || '';
+      const service = serviceInput.value;
+      const amount = Number(amountInput.value) || 0;
+      const message = messageInput.value || '';
+
+      const subject = `Solicitud de cotización - ${service} - ${name || 'Cliente'}`;
+
+      const body = [
+        `Hola,`,
+        ``,
+        `Solicito una cotización para el servicio: ${service}`,
+        ``,
+        `Nombre: ${name}`,
+        `Correo: ${email}`,
+        `Valor estimado: Q ${amount.toLocaleString('es-GT')}`,
+        ``,
+        `Detalles:`,
+        message,
+        ``,
+        `Enviado desde: página de cotización`
+      ].join('\n');
+
+      // Construye mailto (escapando)
+      const mailto = `mailto:${encodeURIComponent(DEFAULT_TO)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+      // Intenta abrir cliente de correo
+      // Nota: mailto puede tener limitaciones de longitud en algunos clientes.
+      window.location.href = mailto;
+    }
+
+    // pequeña función para animar preview (rebote visual)
+    function animatePreview(){
+      const btn = document.getElementById('previewBtn');
+      btn.disabled = true;
+      updatePreviewAndChart();
+      btn.style.transform = 'scale(0.98) translateY(1px)';
+      setTimeout(()=>{ btn.style.transform=''; btn.disabled=false; }, 260);
+    }
+
+    // eventos para actualizar en tiempo real
+    [nameInput, emailInput, serviceInput, amountInput, messageInput].forEach(el => {
+      el.addEventListener('input', () => {
+        // actualiza preview conforme se escribe (no cada milisegundo)
+        debounce(updatePreviewAndChart, 220)();
+      });
+    });
+
+    // debounce helper
+    function debounce(fn, wait){
+      let t;
+      return function(...args){
+        clearTimeout(t);
+        t = setTimeout(()=>fn.apply(this,args), wait);
+      };
+    }
+
+    // Inicializa con valores por defecto
+    document.addEventListener('DOMContentLoaded', () => {
+      updatePreviewAndChart();
+    });
+
+    // accesibilidad: enviar con Ctrl+Enter en el textarea
+    messageInput.addEventListener('keydown', (e)=>{
+      if(e.ctrlKey && e.key === 'Enter'){
+        sendQuote();
+      }
+    });
+  </script>
 </body>
 </html>
