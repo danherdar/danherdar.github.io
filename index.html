@@ -113,31 +113,23 @@
     <h2>Contacto</h2>
     <p>¿Necesitas una cotización o más información?</p>
     <p><strong>Correo:</strong> impresosgraficoshernandez@gmail.com</p>
-    <a class="btn-cotizar" onclick="enviarCotizacion()">Solicitar cotización</a>
+    <a class="btn-cotizar" href="#" onclick="abrirCorreo()">Solicitar cotización</a>
 
 <script>
-function enviarCotizacion() {
+function abrirCorreo() {
   const correo = "impresosgraficoshernandez@gmail.com";
-  const asunto = "Solicitud de cotización - Impresos Gráficos Hernández";
+  const asunto = "Solicitud de cotización";
   const cuerpo = `Hola, deseo solicitar una cotización de sus servicios.
 
 Por favor, envíenme precios, opciones disponibles y tiempos de entrega.
 Gracias.`;
 
-// URL directa de Gmail (funciona en GitHub Pages)
-const gmailURL = `https://mail.google.com/mail/?view=cm&fs=1&to=${correo}&su=${encodeURIComponent(asunto)}&body=${encodeURIComponent(cuerpo)}`;
+  const mailto = `mailto:${correo}?subject=${encodeURIComponent(asunto)}&body=${encodeURIComponent(cuerpo)}`;
 
-// Detectar si el usuario tiene Gmail disponible
-const esAndroid = /Android/.test(navigator.userAgent);
-const esiPhone = /iPhone|iPad|iPod|Mac/.test(navigator.userAgent);
-
-// En Android abre Gmail App, en iPhone/Pc abre Gmail Web
-if (esAndroid || esiPhone) {
-    window.location.href = gmailURL;
-} else {
-    // Fallback universal
-    window.open(gmailURL, "_blank");
-}
+  // iOS y algunos navegadores necesitan setTimeout para que funcione
+  setTimeout(() => {
+    window.location.href = mailto;
+  }, 100);
 }
 </script>
 
