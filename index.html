@@ -113,7 +113,7 @@
     <h2>Contacto</h2>
     <p>¿Necesitas una cotización o más información?</p>
     <p><strong>Correo:</strong> impresosgraficoshernandez@gmail.com</p>
-    <button class="btn-cotizar" onclick="enviarCotizacion()">Solicitar cotización</button>
+    <a class="btn-cotizar" onclick="enviarCotizacion()">Solicitar cotización</a>
 
 <script>
 function enviarCotizacion() {
@@ -121,21 +121,19 @@ function enviarCotizacion() {
   const cuerpo = `Hola, deseo solicitar una cotización de sus servicios.
 
 Por favor, envíenme precios, opciones disponibles y tiempos de entrega.
-
-Gracias.
--- Enviado desde la página web`;
+Gracias.`;
 
   const correo = "impresosgraficoshernandez@gmail.com";
   const mailto = `mailto:${correo}?subject=${encodeURIComponent(asunto)}&body=${encodeURIComponent(cuerpo)}`;
 
-  const puedeAbrir = /Android|Windows/.test(navigator.userAgent);
+  // Detecta si el dispositivo soporta mailto (Android/Windows)
+  const puedeCorreo = /Android|Windows/.test(navigator.userAgent);
 
-  if (puedeAbrir) {
+  if (puedeCorreo) {
     window.location.href = mailto;
   } else {
-    // fallback: WhatsApp
-    const wa = `https://wa.me/502${/* tu número */}50241165196?text=${encodeURIComponent(cuerpo)}`;
-    alert("Tu dispositivo no soporta 'mailto'. Te redirigiremos a WhatsApp.");
+    // Fallback a WhatsApp para iPhone y otros
+    const wa = `https://wa.me/50241165196?text=${encodeURIComponent(cuerpo)}`;
     window.open(wa, "_blank");
   }
 }
