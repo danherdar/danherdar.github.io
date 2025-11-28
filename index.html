@@ -114,28 +114,29 @@
     <p>¿Necesitas una cotización o más información?</p>
     <p><strong>Correo:</strong> impresosgraficoshernandez@gmail.com</p>
     <button class="btn-cotizar" onclick="enviarCotizacion()">Solicitar cotización</button>
-  </section>
 
-  <footer>
-    <p>© 2025 Impresos Gráficos Hernández — Todos los derechos reservados.</p>
-  </footer>
-  <script>
+<script>
 function enviarCotizacion() {
-  const correo = "impresosgraficoshernandez@gmail.com";
-
   const asunto = "Solicitud de cotización - Impresos Gráficos Hernández";
   const cuerpo = `Hola, deseo solicitar una cotización de sus servicios.
 
 Por favor, envíenme precios, opciones disponibles y tiempos de entrega.
 
 Gracias.
-
 -- Enviado desde la página web`;
 
+  const correo = "impresosgraficoshernandez@gmail.com";
   const mailto = `mailto:${correo}?subject=${encodeURIComponent(asunto)}&body=${encodeURIComponent(cuerpo)}`;
-  window.location.href = mailto;
+
+  const puedeAbrir = /Android|Windows/.test(navigator.userAgent);
+
+  if (puedeAbrir) {
+    window.location.href = mailto;
+  } else {
+    // fallback: WhatsApp
+    const wa = `https://wa.me/502${/* tu número */}50241165196?text=${encodeURIComponent(cuerpo)}`;
+    alert("Tu dispositivo no soporta 'mailto'. Te redirigiremos a WhatsApp.");
+    window.open(wa, "_blank");
+  }
 }
 </script>
-
-</body>
-</html>
