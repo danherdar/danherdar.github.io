@@ -119,5 +119,23 @@
   <footer>
     <p>© 2025 Impresos Gráficos Hernández — Todos los derechos reservados.</p>
   </footer>
+  <script>
+function enviarCotizacion() {
+  const correo = "impresosgraficoshernandez@gmail.com";
+
+  const asunto = "Solicitud de cotización - Impresos Gráficos Hernández";
+  const cuerpo = `Hola, deseo solicitar una cotización de sus servicios.
+
+Por favor, envíenme precios, opciones disponibles y tiempos de entrega.
+
+Gracias.
+
+-- Enviado desde la página web`;
+
+  const mailto = `mailto:${correo}?subject=${encodeURIComponent(asunto)}&body=${encodeURIComponent(cuerpo)}`;
+  window.location.href = mailto;
+}
+</script>
+
 </body>
 </html>
