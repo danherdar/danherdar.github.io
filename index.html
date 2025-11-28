@@ -117,28 +117,30 @@
 
 <script>
 function enviarCotizacion() {
+  const correo = "impresosgraficoshernandez@gmail.com";
   const asunto = "Solicitud de cotización - Impresos Gráficos Hernández";
   const cuerpo = `Hola, deseo solicitar una cotización de sus servicios.
 
 Por favor, envíenme precios, opciones disponibles y tiempos de entrega.
 Gracias.`;
 
-  const correo = "impresosgraficoshernandez@gmail.com";
-  const mailto = `mailto:${correo}?subject=${encodeURIComponent(asunto)}&body=${encodeURIComponent(cuerpo)}`;
+// URL directa de Gmail (funciona en GitHub Pages)
+const gmailURL = `https://mail.google.com/mail/?view=cm&fs=1&to=${correo}&su=${encodeURIComponent(asunto)}&body=${encodeURIComponent(cuerpo)}`;
 
-  // Detecta si el dispositivo soporta mailto (Android/Windows)
-  const puedeCorreo = /Android|Windows/.test(navigator.userAgent);
+// Detectar si el usuario tiene Gmail disponible
+const esAndroid = /Android/.test(navigator.userAgent);
+const esiPhone = /iPhone|iPad|iPod|Mac/.test(navigator.userAgent);
 
-  if (puedeCorreo) {
-    window.location.href = mailto;
-  } else {
-    // Fallback a WhatsApp para iPhone y otros
-    const wa = `https://wa.me/50241165196?text=${encodeURIComponent(cuerpo)}`;
-    window.open(wa, "_blank");
-  }
+// En Android abre Gmail App, en iPhone/Pc abre Gmail Web
+if (esAndroid || esiPhone) {
+    window.location.href = gmailURL;
+} else {
+    // Fallback universal
+    window.open(gmailURL, "_blank");
+}
 }
 </script>
-  </section>
+
 
   <footer>
     <p>© 2025 Impresos Gráficos Hernández — Todos los derechos reservados.</p>
